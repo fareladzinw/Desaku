@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserFactory extends Factory
 {
@@ -23,11 +24,22 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'nik' => Str::random(14),
+            'name' => "Admin",
+            'jenis_kelamin' => 1,
+            'role' => 4,
+            'tempat_lahir' => Str::random(6),
+            'tanggal_lahir' => Carbon::now(),
+            'agama' => Str::random(6),
+            'alamat' => Str::random(6),
+            'no_telp' => Str::random(12),
+            'username' => "admin",
+            'password' => bcrypt('admin'),
+            'rt_id' => null,
+            'rw_id' => null,
+            'desa_id' => null,
+            'is_kepala' => 0,
+            'status' => 0
         ];
     }
 

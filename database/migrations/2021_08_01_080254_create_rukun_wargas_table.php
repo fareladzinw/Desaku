@@ -14,7 +14,7 @@ class CreateRukunWargasTable extends Migration
     public function up()
     {
         Schema::create('rukun_wargas', function (Blueprint $table) {
-            $$table->id();
+            $table->id();
             $table->string('nama');
             $table->unsignedBigInteger('desa_id')->nullable();
             $table->timestamps();

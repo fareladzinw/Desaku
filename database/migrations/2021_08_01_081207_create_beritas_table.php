@@ -15,7 +15,17 @@ class CreateBeritasTable extends Migration
     {
         Schema::create('beritas', function (Blueprint $table) {
             $table->id();
+            $table->string('judul');
+            $table->string('deskripsi');
+            $table->string('img')->nullable();
+            $table->unsignedBigInteger('rt_id')->nullable();
+            $table->unsignedBigInteger('rw_id')->nullable();
+            $table->unsignedBigInteger('desa_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('rt_id')->references('id')->on('rukun_tetanggas');
+            $table->foreign('rw_id')->references('id')->on('rukun_wargas');
+            $table->foreign('desa_id')->references('id')->on('desas');
         });
     }
 

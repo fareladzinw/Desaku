@@ -15,7 +15,16 @@ class CreateKegiatansTable extends Migration
     {
         Schema::create('kegiatans', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
+            $table->string('deskripsi');
+            $table->unsignedBigInteger('rt_id')->nullable();
+            $table->unsignedBigInteger('rw_id')->nullable();
+            $table->unsignedBigInteger('desa_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('rt_id')->references('id')->on('rukun_tetanggas');
+            $table->foreign('rw_id')->references('id')->on('rukun_wargas');
+            $table->foreign('desa_id')->references('id')->on('desas');
         });
     }
 

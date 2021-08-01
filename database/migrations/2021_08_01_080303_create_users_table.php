@@ -19,12 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->enum('role', ['Warga', 'RT', 'RW', 'Admin']);
-            $table->timestamp('email_verified_at')->nullable();
             $table->string("tempat_lahir");
             $table->date("tanggal_lahir");
             $table->string('agama');
             $table->string('alamat');
             $table->string('no_telp');
+            $table->string('username');
             $table->string('password');
             $table->unsignedBigInteger('rt_id')->nullable();
             $table->unsignedBigInteger('rw_id')->nullable();
