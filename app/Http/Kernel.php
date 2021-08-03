@@ -62,5 +62,11 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'warga' => \App\Http\Middleware\Warga::class,
+        'rt' => \App\Http\Middleware\Rt::class,
+        'rw' => \App\Http\Middleware\Rw::class,
+        'desa' => \App\Http\Middleware\Desa::class,
+        'admin' => \App\Http\Middleware\Admin::class,
+        'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
     ];
 }

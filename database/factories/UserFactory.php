@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'nik' => Str::random(14),
             'name' => "Admin",
             'jenis_kelamin' => 1,
-            'role' => 4,
+            'role' => 5,
             'tempat_lahir' => Str::random(6),
             'tanggal_lahir' => Carbon::now(),
             'agama' => Str::random(6),
@@ -38,7 +38,6 @@ class UserFactory extends Factory
             'rt_id' => null,
             'rw_id' => null,
             'desa_id' => null,
-            'is_kepala' => 0,
             'status' => 0
         ];
     }

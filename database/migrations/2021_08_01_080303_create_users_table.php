@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nik');
             $table->string('name');
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
-            $table->enum('role', ['Warga', 'RT', 'RW', 'Admin']);
+            $table->enum('role', ['Warga', 'RT', 'RW','Desa', 'Admin']);
             $table->string("tempat_lahir");
             $table->date("tanggal_lahir");
             $table->string('agama');
@@ -29,7 +29,6 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('rt_id')->nullable();
             $table->unsignedBigInteger('rw_id')->nullable();
             $table->unsignedBigInteger('desa_id')->nullable();
-            $table->boolean('is_kepala');
             $table->boolean('status');
             $table->rememberToken();
             $table->timestamps();
