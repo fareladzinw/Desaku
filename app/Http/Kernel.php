@@ -43,6 +43,7 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
     ];
 
     /**
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'rw' => \App\Http\Middleware\Rw::class,
         'desa' => \App\Http\Middleware\Desa::class,
         'admin' => \App\Http\Middleware\Admin::class,
+        'desarwrt.access' => \App\Http\Middleware\DesaRwRt::class,
         'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
     ];
 }

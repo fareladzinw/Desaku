@@ -2,12 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RwController;
 use App\Http\Controllers\RtController;
 use App\Http\Controllers\WargaController;
+
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\SuratController;
+
+
 
 
 
@@ -43,8 +51,44 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+    
+    //BERITA API
+    Route::get('/show-berita', [BeritaController::class, 'showBerita']);
+    Route::post('/show-berita/filter', [BeritaController::class, 'showBeritaFilter']);
+
+    //Kegiatan API
+    Route::get('/show-kegiatan', [KegiatanController::class, 'showKegiatan']);
+    Route::post('/show-kegiatan/filter', [KegiatanController::class, 'showKegiatanFilter']);
+
+    //Laporan API
+    Route::get('/show-laporan', [LaporanController::class, 'showLaporan']);
+    Route::post('/show-laporan/filter', [LaporanController::class, 'showLaporanFilter']);
+
+    //Surat API
+    Route::get('/show-surat', [SuratController::class, 'showSurat']);
+    Route::post('/show-surat/filter', [SuratController::class, 'showSuratFilter']);
 });
 //========================================================================================
+
+
+
+
+
+
+
+//DESA, RW, RT ACCESS API
+Route::group(['middleware' => ['jwt.verify','desarwrt.access']], function () {
+
+    Route::group(['prefix'=>'laporan'],function(){
+        Route::post('/validasi', [LaporamController::class, 'validasiLaporan']);
+    });
+
+    Route::group(['prefix'=>'surat'],function(){
+        Route::post('/change-status', [SuratController::class, 'changeStatusSurat']);
+    });
+});
+//========================================================================================
+
 
 
 
@@ -63,7 +107,6 @@ Route::group(['prefix' => 'admin','middleware' => ['jwt.verify','admin']], funct
     Route::get('/show-user', [AdminController::class, 'showUser']);
     Route::post('/show-user/filter', [AdminController::class, 'showUserFilter']);
     //==================================================================
-
 
     //API Desa
     Route::post('/create-desa', [AdminController::class, 'createDesa']);
@@ -91,11 +134,16 @@ Route::group(['prefix' => 'admin','middleware' => ['jwt.verify','admin']], funct
 
 
 
+
+
 //DESA API
 Route::group(['prefix' => 'desa','middleware' => ['jwt.verify','desa']], function () {
     Route::get('/user-profile', [DesaController::class, 'userProfile']);
 });
 //========================================================================================
+
+
+
 
 
 
@@ -109,11 +157,16 @@ Route::group(['prefix' => 'rw','middleware' => ['jwt.verify','rw']], function ()
 
 
 
+
+
+
 //RT API
 Route::group(['prefix' => 'rt','middleware' => ['jwt.verify','rt']], function () {
     Route::get('/user-profile', [DesaController::class, 'userProfile']);
 });
 //========================================================================================
+
+
 
 
 

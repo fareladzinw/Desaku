@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Berita extends Model
 {
     use HasFactory;
+
+    public function rt(){
+        return $this->belongsTo('App\Models\RukunTetangga', 'rt_id', 'id');
+    }
+
+    public function rw(){
+        return $this->belongsTo('App\Models\RukunWarga', 'rw_id', 'id');
+    }
+
+    public function desa(){
+        return $this->belongsTo('App\Models\Desa', 'desa_id', 'id');
+    }
 }
