@@ -138,7 +138,13 @@ Route::group(['prefix' => 'admin','middleware' => ['jwt.verify','admin']], funct
 
 //DESA API
 Route::group(['prefix' => 'desa','middleware' => ['jwt.verify','desa']], function () {
-    Route::get('/user-profile', [DesaController::class, 'userProfile']);
+
+    //CRUD USER ( Warga, RW, RT )
+    Route::post('/register-user', [DesaController::class, 'registerUser']);
+    Route::post('/update-user', [DesaController::class, 'updateUser']);
+    Route::post('/delete-user', [DesaController::class, 'deleteUser']);
+    Route::get('/show-user', [DesaController::class, 'showUser']);
+    //==============================================================
 });
 //========================================================================================
 
@@ -150,7 +156,13 @@ Route::group(['prefix' => 'desa','middleware' => ['jwt.verify','desa']], functio
 
 //RW API
 Route::group(['prefix' => 'rw','middleware' => ['jwt.verify','rw']], function () {
-    Route::get('/user-profile', [DesaController::class, 'userProfile']);
+
+    //CRUD USER ( Warga, RT )
+    Route::post('/register-user', [RwController::class, 'registerUser']);
+    Route::post('/update-user', [RwController::class, 'updateUser']);
+    Route::post('/delete-user', [RwController::class, 'deleteUser']);
+    Route::get('/show-user', [RwController::class, 'showUser']);
+    //==============================================================
 });
 //========================================================================================
 
@@ -162,7 +174,13 @@ Route::group(['prefix' => 'rw','middleware' => ['jwt.verify','rw']], function ()
 
 //RT API
 Route::group(['prefix' => 'rt','middleware' => ['jwt.verify','rt']], function () {
-    Route::get('/user-profile', [DesaController::class, 'userProfile']);
+
+    //CRUD USER ( Warga, RT )
+    Route::post('/register-user', [RtController::class, 'registerUser']);
+    Route::post('/update-user', [RtController::class, 'updateUser']);
+    Route::post('/delete-user', [RtController::class, 'deleteUser']);
+    Route::get('/show-user', [RtController::class, 'showUser']);
+    //==============================================================
 });
 //========================================================================================
 
