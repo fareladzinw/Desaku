@@ -176,6 +176,16 @@ Route::group(['prefix' => 'rw','middleware' => ['jwt.verify','rw']], function ()
     Route::post('/delete-user', [RwController::class, 'deleteUser']);
     Route::get('/show-user', [RwController::class, 'showUser']);
     //==============================================================
+
+    //BERITA
+    Route::post('/create-berita', [RwController::class, 'createBerita']);
+    Route::post('/delete-berita', [RwController::class, 'deleteBerita']);
+    //===============================================================
+
+    //Kegiatan
+    Route::post('/create-kegiatan', [RwController::class, 'createKegiatan']);
+    Route::post('/delete-kegiatan', [RwController::class, 'deleteKegiatan']);
+    //===============================================================
 });
 //========================================================================================
 
@@ -194,6 +204,23 @@ Route::group(['prefix' => 'rt','middleware' => ['jwt.verify','rt']], function ()
     Route::post('/delete-user', [RtController::class, 'deleteUser']);
     Route::get('/show-user', [RtController::class, 'showUser']);
     //==============================================================
+
+    //BERITA
+    Route::post('/create-berita', [RtController::class, 'createBerita']);
+    Route::post('/delete-berita', [RtController::class, 'deleteBerita']);
+    //===============================================================
+
+    //Kegiatan
+    Route::post('/create-kegiatan', [RtController::class, 'createKegiatan']);
+    Route::post('/delete-kegiatan', [RtController::class, 'deleteKegiatan']);
+    //===============================================================
+
+
+    //Verifikasi Warga
+    Route::get('/show-warga/unverif', [RtController::class, 'showWargaUnverif']);
+    Route::post('/verif/warga', [RtController::class, 'verifWarga']);
+    //===============================================================
+
 });
 //========================================================================================
 
@@ -204,6 +231,9 @@ Route::group(['prefix' => 'rt','middleware' => ['jwt.verify','rt']], function ()
 
 //WARGA API
 Route::group(['prefix' => 'warga','middleware' => ['jwt.verify','warga']], function () {
-    Route::get('/user-profile', [DesaController::class, 'userProfile']);
+    Route::get('/user-profile', [WargaController::class, 'userProfile']);
+    Route::post('/create-surat', [SuratController::class, 'createSurat']);
+    Route::post('/create-laporan', [LaporanController::class, 'createLaporan']);
+    
 });
 //========================================================================================

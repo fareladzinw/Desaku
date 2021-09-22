@@ -108,35 +108,43 @@ class AdminController extends Controller
             return response($res,406);
         }
 
-        $checkEksistensiRt = User::where('role','=','RT')
-        ->where('rt_id',$rt_id)
-        ->where('rw_id',$rw_id)
-        ->where('desa_id',$desa_id)
-        ->first();
-        if(empty($checkEksistensiRt)){
-            $res['message'] = "failed";
-            $res['detail'] = "Dalam RT Tersebut sudah terdapat Ketua RT nya";
-            return response($res,406);
+        if($role == 'RT'){
+            $checkEksistensiRt = User::where('role','=','RT')
+            ->where('rt_id',$rt_id)
+            ->where('rw_id',$rw_id)
+            ->where('desa_id',$desa_id)
+            ->first();
+
+            if(!empty($checkEksistensiRt)){
+                $res['message'] = "failed";
+                $res['detail'] = "Dalam RT Tersebut sudah terdapat Ketua RT nya";
+                return response($res,406);
+            }
         }
 
-        $checkEksistensiRw = User::where('role','=','RW')
-        ->where('rw_id',$rw_id)
-        ->where('desa_id',$desa_id)
-        ->first();
-        if(empty($checkEksistensiRw)){
-            $res['message'] = "failed";
-            $res['detail'] = "Dalam RW Tersebut sudah terdapat Ketua RW nya";
-            return response($res,406);
+        if($role == 'RW'){
+            $checkEksistensiRw = User::where('role','=','RW')
+            ->where('rw_id',$rw_id)
+            ->where('desa_id',$desa_id)
+            ->first();
+            if(!empty($checkEksistensiRw)){
+                $res['message'] = "failed";
+                $res['detail'] = "Dalam RW Tersebut sudah terdapat Ketua RW nya";
+                return response($res,406);
+            }
         }
-
-        $checkEksistensiDesa = User::where('role','=','Desa')
-        ->where('desa_id',$desa_id)
-        ->first();
-        if(empty($checkEksistensiDesa)){
-            $res['message'] = "failed";
-            $res['detail'] = "Dalam Desa Tersebut sudah terdapat Ketua Desa nya";
-            return response($res,406);
+        
+        if($role == 'Desa'){
+            $checkEksistensiDesa = User::where('role','=','Desa')
+            ->where('desa_id',$desa_id)
+            ->first();
+            if(!empty($checkEksistensiDesa)){
+                $res['message'] = "failed";
+                $res['detail'] = "Dalam Desa Tersebut sudah terdapat Ketua Desa nya";
+                return response($res,406);
+            }
         }
+        
 
         //Input Data
         $data = new User;

@@ -161,4 +161,47 @@ class LaporanController extends Controller
             return response($res,406);
         }
     }
+
+
+    public function createLaporan(Request $request){
+        $this->validate($request,[
+            'pengirim_id' => 'required',
+            'penerima_id' => 'required',
+            'judul' => 'required',
+            'detail_laporan' => 'required',
+            'rt_id' => 'nullable',
+            'rw_id' => 'nullable',
+            'desa_id' => 'nullable',
+        ]);
+
+        $pengirim_id = $request->input('pengirim_id');
+        $penerima_id = $request->input('penerima_id');
+        $judul = $request->input('judul');
+        $detail_laporan = $request->input('detail_laporan');
+        $rt_id = $request->input('rt_id');
+        $rw_id = $request->input('rw_id');
+        $desa_id = $request->input('desa_id');
+
+        $data = new Laporan;
+        $data->pengirim_id = $pengirim_id;
+        $data->penerima_id = $penerima_id;
+        $data->judul = $judul;
+        $data->detail_laporan = $detail_laporan;
+        $data->status_penyelesaian = 0;
+        $data->desa_id = $desa_id;
+        $data->rw_id = $rw_id;
+        $data->rt_id = $rt_id;
+
+        if($data -> save()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Membuat Laporan";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Gagal Membuat Laporan";
+            return response($res,406);
+        }
+    }
 }

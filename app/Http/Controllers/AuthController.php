@@ -20,10 +20,17 @@
         public function login(Request $request){
             $credentials = $request->only('username', 'password');
 
+            $username = $request->input('username');
             try {
                 if (! $token = JWTAuth::attempt($credentials)) {
                     $res['message'] = "failed";
                     $res['detail'] = "Username / Password yang anda masukan salah";
+                    return response($res,406);
+                }
+                $checkStatus = User::where('username',$username)->first();
+                if($checkStatus->status == 0){
+                    $res['message'] = "failed";
+                    $res['detail'] = "Akun Anda Masih belum diverifikasi";
                     return response($res,406);
                 }
             } catch (JWTException $e) {

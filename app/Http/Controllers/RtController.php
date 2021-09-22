@@ -307,4 +307,215 @@ class RtController extends Controller
     }
 
     //================================================================
+
+
+
+
+
+
+
+    //API BERITA
+
+    public function createBerita(Request $request){
+        $this->validate($request,[
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'required',
+        ]);
+
+        $judul = $request->input('judul');
+        $deskripsi = $request->input('deskripsi');
+        $image = $request->file('image');
+
+        //Inisialisasi ID Desa
+        $idDesa = Auth()->user()->desa_id;
+        $idRw = Auth()->user()->rw_id;
+        $idRt = Auth()->user()->rt_id;
+
+        $data = new Berita;
+        $data->judul = $judul;
+        $data->deskripsi = $deskripsi;
+        $data->desa_id = $idDesa;
+        $data->rw_id = $idRw;
+        $data->rt_id = $idRt;
+
+        $name = $image->getClientOriginalName();
+        $image->move(public_path('images/berita'), $name);
+        $data->img = $name;
+
+        if($data->save()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Membuat Berita";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Gagal Membuat Berita";
+            return response($res,406);
+        }
+    }
+
+
+    public function deleteBerita(Request $request){
+        $id = $request->input('id');
+
+        $data = Berita::find($id);
+
+        if($data->delete()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Menghapus Berita";
+            $res['data'] = $data;
+            return response($res,200);
+        }else{
+            $res['message'] = "failed";
+            $res['detail'] = "Berita tidak dapat ditemukan";
+            return response($res,406);
+        }
+    }
+    //================================================================
+
+
+
+
+
+
+
+
+    //API Kegiatan
+
+    public function createKegiatan(Request $request){
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
+        $tanggal = $request->input('tanggal');
+        $deskripsi = $request->input('deskripsi');
+
+        //Inisialisasi ID Desa
+        $idDesa = Auth()->user()->desa_id;
+        $idRw = Auth()->user()->rw_id;
+        $idRt = Auth()->user()->rt_id;
+
+
+        $data = new Kegiatan;
+        $data->tanggal = $tanggal;
+        $data->deskripsi = $deskripsi;
+        $data->desa_id = $idDesa;
+        $data->rw_id = $idRw;
+        $data->rt_id = $idRt;
+
+        if($data->save()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Membuat Kegiatan";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Gagal Membuat Kegiatan";
+            return response($res,406);
+        }
+    }
+
+
+    public function deleteKegiatan(Request $request){
+        $id = $request->input('id');
+
+        $data = Kegiatan::find($id);
+
+        if($data->delete()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Menghapus Kegiatan";
+            $res['data'] = $data;
+            return response($res,200);
+        }else{
+            $res['message'] = "failed";
+            $res['detail'] = "Kegiatan tidak dapat ditemukan";
+            return response($res,406);
+        }
+    }
+    //================================================================
+
+
+
+
+
+
+
+
+    //Verifikasi Warga
+    public function showWargaUnverif(){
+
+        //Inisialisasi ID 
+        $idDesa = Auth()->user()->desa_id;
+        $idRw = Auth()->user()->rw_id;
+        $idRt = Auth()->user()->rt_id;
+
+        $data = User::where('rt_id',$idRt)
+        ->where('rw_id',$idRw)
+        ->where('desa_id',$idDesa)
+        ->where('status','=',0)
+        ->where('role','=','Warga')
+        ->get();
+
+        if($data){
+            $res['message'] = "success";
+            $res['detail'] = "Data Semua User";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Tidak Ada data warga yang perlu diverifikasi pada RT Tersebut";
+            return response($res,406);
+        }
+    }
+
+
+    public function verifWarga(Request $request){
+        $this->validate($request,[
+            'id_warga' => 'required',
+        ]);
+
+        $id_warga = $request->input('id_warga');
+
+        //Inisialisasi ID 
+        $idDesa = Auth()->user()->desa_id;
+        $idRw = Auth()->user()->rw_id;
+        $idRt = Auth()->user()->rt_id;
+
+        $checkData = User::where('rt_id',$idRt)
+        ->where('rw_id',$idRw)
+        ->where('desa_id',$idDesa)
+        ->where('status','=',0)
+        ->where('role','=','Warga')
+        ->where('id',$id_warga)
+        ->first();
+
+        if(empty($checkData)){
+            $res['message'] = "failed";
+            $res['detail'] = "Tidak ditemukan warga dengan id Tersebut pada RT anda";
+            return response($res,406);
+        }
+
+        $data = User::find($id_warga);
+        $data->status = 1;
+
+        if($data->save()){
+            $res['message'] = "success";
+            $res['detail'] = "Data Warga Berhasil diverifikasi";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Tidak Ada data warga yang perlu diverifikasi pada RT Tersebut";
+            return response($res,406);
+        }
+    }
+
+    //================================================================
+
 }

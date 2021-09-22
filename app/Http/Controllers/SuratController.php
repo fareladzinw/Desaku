@@ -163,4 +163,51 @@ class SuratController extends Controller
             return response($res,406);
         }
     }
+
+
+
+    public function createSurat(Request $request){
+        $this->validate($request,[
+            'pengirim_id' => 'required',
+            'penerima_id' => 'required',
+            'keperluan' => 'required',
+            'file' => 'required',
+            'rt_id' => 'nullable',
+            'rw_id' => 'nullable',
+            'desa_id' => 'nullable',
+        ]);
+
+        $pengirim_id = $request->input('pengirim_id');
+        $penerima_id = $request->input('penerima_id');
+        $keperluan = $request->input('keperluan');
+        $file = $request->input('file');
+        $rt_id = $request->input('rt_id');
+        $rw_id = $request->input('rw_id');
+        $desa_id = $request->input('desa_id');
+
+        $data = new Surat;
+        $data->pengirim_id = $pengirim_id;
+        $data->penerima_id = $penerima_id;
+        $data->keperluan = $keperluan;
+        $data->status = 2;
+        $data->desa_id = $desa_id;
+        $data->rw_id = $rw_id;
+        $data->rt_id = $rt_id;
+
+        $name = $file->getClientOriginalName();
+        $file->move(public_path('file/surat'), $name);
+        $data->file = $name;
+
+        if($data -> save()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Membuat Surat";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Gagal Membuat Surat";
+            return response($res,406);
+        }
+    }
 }

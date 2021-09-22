@@ -451,7 +451,7 @@ class DesaController extends Controller
         $image->move(public_path('images/berita'), $name);
         $data->img = $name;
 
-        if($data){
+        if($data->save()){
             $res['message'] = "success";
             $res['detail'] = "Berhasil Membuat Berita";
             $res['data'] = $data;
@@ -498,7 +498,7 @@ class DesaController extends Controller
             'rw_id' => 'nullable',
         ]);
 
-        $judul = $request->input('judul');
+        $tanggal = $request->input('tanggal');
         $deskripsi = $request->input('deskripsi');
         $rt_id = $request->rt_id;
         $rw_id = $request->rw_id;
@@ -506,14 +506,14 @@ class DesaController extends Controller
         //Inisialisasi ID Desa
         $idDesa = Auth()->user()->desa_id;
 
-        $data = new Berita;
-        $data->tanggal = $judul;
+        $data = new Kegiatan;
+        $data->tanggal = $tanggal;
         $data->deskripsi = $deskripsi;
         $data->desa_id = $idDesa;
         $data->rw_id = $rw_id;
         $data->rt_id = $rt_id;
 
-        if($data){
+        if($data->save()){
             $res['message'] = "success";
             $res['detail'] = "Berhasil Membuat Kegiatan";
             $res['data'] = $data;

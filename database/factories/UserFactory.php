@@ -38,7 +38,7 @@ class UserFactory extends Factory
             'rt_id' => null,
             'rw_id' => null,
             'desa_id' => null,
-            'status' => 0
+            'status' => 1
         ];
     }
 
