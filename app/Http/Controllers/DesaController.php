@@ -413,4 +413,136 @@ class DesaController extends Controller
 
 
     //================================================================
+
+
+
+
+
+
+
+    //API BERITA
+
+    public function createBerita(Request $request){
+        $this->validate($request,[
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'required',
+            'rt_id' => 'nullable',
+            'rw_id' => 'nullable',
+        ]);
+
+        $judul = $request->input('judul');
+        $deskripsi = $request->input('deskripsi');
+        $image = $request->file('image');
+        $rt_id = $request->rt_id;
+        $rw_id = $request->rw_id;
+
+        //Inisialisasi ID Desa
+        $idDesa = Auth()->user()->desa_id;
+
+        $data = new Berita;
+        $data->judul = $judul;
+        $data->deskripsi = $deskripsi;
+        $data->desa_id = $idDesa;
+        $data->rw_id = $rw_id;
+        $data->rt_id = $rt_id;
+
+        $name = $image->getClientOriginalName();
+        $image->move(public_path('images/berita'), $name);
+        $data->img = $name;
+
+        if($data){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Membuat Berita";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Gagal Membuat Berita";
+            return response($res,406);
+        }
+    }
+
+
+    public function deleteBerita(Request $request){
+        $id = $request->input('id');
+
+        $data = Berita::find($id);
+
+        if($data->delete()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Menghapus Berita";
+            $res['data'] = $data;
+            return response($res,200);
+        }else{
+            $res['message'] = "failed";
+            $res['detail'] = "Berita tidak dapat ditemukan";
+            return response($res,406);
+        }
+    }
+    //================================================================
+
+
+
+
+
+
+    //API Kegiatan
+
+    public function createKegiatan(Request $request){
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'deskripsi' => 'required',
+            'rt_id' => 'nullable',
+            'rw_id' => 'nullable',
+        ]);
+
+        $judul = $request->input('judul');
+        $deskripsi = $request->input('deskripsi');
+        $rt_id = $request->rt_id;
+        $rw_id = $request->rw_id;
+
+        //Inisialisasi ID Desa
+        $idDesa = Auth()->user()->desa_id;
+
+        $data = new Berita;
+        $data->tanggal = $judul;
+        $data->deskripsi = $deskripsi;
+        $data->desa_id = $idDesa;
+        $data->rw_id = $rw_id;
+        $data->rt_id = $rt_id;
+
+        if($data){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Membuat Kegiatan";
+            $res['data'] = $data;
+            return response($res,200);
+        }
+        else{
+            $res['message'] = "failed";
+            $res['detail'] = "Gagal Membuat Kegiatan";
+            return response($res,406);
+        }
+    }
+
+
+    public function deleteKegiatan(Request $request){
+        $id = $request->input('id');
+
+        $data = Kegiatan::find($id);
+
+        if($data->delete()){
+            $res['message'] = "success";
+            $res['detail'] = "Berhasil Menghapus Kegiatan";
+            $res['data'] = $data;
+            return response($res,200);
+        }else{
+            $res['message'] = "failed";
+            $res['detail'] = "Kegiatan tidak dapat ditemukan";
+            return response($res,406);
+        }
+    }
+    //================================================================
+
 }

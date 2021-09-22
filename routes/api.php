@@ -145,6 +145,19 @@ Route::group(['prefix' => 'desa','middleware' => ['jwt.verify','desa']], functio
     Route::post('/delete-user', [DesaController::class, 'deleteUser']);
     Route::get('/show-user', [DesaController::class, 'showUser']);
     //==============================================================
+
+
+    //BERITA
+    Route::post('/create-berita', [DesaController::class, 'createBerita']);
+    Route::post('/delete-berita', [DesaController::class, 'deleteBerita']);
+    //===============================================================
+
+    //Kegiatan
+    Route::post('/create-kegiatan', [DesaController::class, 'createKegiatan']);
+    Route::post('/delete-kegiatan', [DesaController::class, 'deleteKegiatan']);
+    //===============================================================
+
+
 });
 //========================================================================================
 
